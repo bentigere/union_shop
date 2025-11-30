@@ -94,8 +94,8 @@ class HomeScreen extends StatelessWidget {
                             onTap: () {
                               navigateToHome(context);
                             },
-                            child: Image.network(
-                              'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
+                            child: Image.asset(
+                              'assets/images/jordanlogo.png.jpg',
                               height: 18,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
