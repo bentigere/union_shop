@@ -101,7 +101,7 @@ class CollectionsPage extends StatelessWidget {
       color: isHighlight ? Colors.red[50] : Colors.white,
       child: InkWell(
         onTap: () {
-          // Placeholder for navigation to specific collection
+          Navigator.pushNamed(context, '/collection-products');
         },
         child: Padding(
           padding: const EdgeInsets.all(24.0),
