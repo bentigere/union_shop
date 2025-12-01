@@ -68,7 +68,7 @@ class DesktopNavBar extends StatelessWidget {
         Row(
           children: [
             _NavBarLink(title: 'Home', onTap: () => Navigator.pushNamed(context, '/')),
-            _NavBarLink(title: 'Shop', onTap: () {}), // Placeholder
+            _NavBarLink(title: 'Shop', onTap: () => Navigator.pushNamed(context, '/collections')),
             _NavBarLink(title: 'About Us', onTap: () => Navigator.pushNamed(context, '/about')),
             _NavBarLink(title: 'Sale', onTap: () => Navigator.pushNamed(context, '/sale'), isSale: true),
             _NavBarLink(title: 'Contact', onTap: () {}), // Placeholder
