@@ -74,6 +74,7 @@ class SalePage extends StatelessWidget {
                     originalPrice: '£24.99',
                     imageUrl:
                         'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                    productId: '5',
                   ),
                   ProductCard(
                     title: 'Essential T-Shirt - White',
@@ -81,6 +82,7 @@ class SalePage extends StatelessWidget {
                     originalPrice: '£12.99',
                     imageUrl:
                         'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                    productId: '6',
                   ),
                   ProductCard(
                     title: 'University Mug',
@@ -88,6 +90,7 @@ class SalePage extends StatelessWidget {
                     originalPrice: '£8.99',
                     imageUrl:
                         'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                    productId: '7',
                   ),
                   ProductCard(
                     title: 'Notebook A4',
@@ -95,6 +98,7 @@ class SalePage extends StatelessWidget {
                     originalPrice: '£5.00',
                     imageUrl:
                         'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                    productId: '8',
                   ),
                   ProductCard(
                     title: 'Sports Water Bottle',

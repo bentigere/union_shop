@@ -59,12 +59,11 @@ class HomeScreen extends StatelessWidget {
   }
 
   void navigateToAbout(BuildContext context) {
-  Navigator.pushNamed(context, '/about');
+    Navigator.pushNamed(context, '/about');
   }
 
-
-  void placeholderCallbackForButtons() {
-    // This is the event handler for buttons that don't work yet
+  void navigateToCollections(BuildContext context) {
+    Navigator.pushNamed(context, '/collections');
   }
 
   @override
@@ -129,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 32),
                         ElevatedButton(
-                          onPressed: placeholderCallbackForButtons,
+                          onPressed: () => navigateToCollections(context),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF4d2963),
                             foregroundColor: Colors.white,
@@ -178,24 +177,28 @@ class HomeScreen extends StatelessWidget {
                           price: '£14.99',
                           imageUrl:
                               'https://ik.imagekit.io/3e62m6un2/Nike%20Dunk%20Panda%20Low%20DD1391-100/_Nike%20Dunk%20Panda%20Low%20DD1391-100._001.jpeg?updatedAt=1702045203378',
+                          productId: '1',
                         ),
                         ProductCard(
                           title: 'Essential T shirt',
                           price: '£6.99',
                           imageUrl:
                               'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                          productId: '2',
                         ),
                         ProductCard(
                           title: 'Signature Hoodie',
                           price: '£32.99',
                           imageUrl:
                               'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                          productId: '3',
                         ),
                         ProductCard(
                           title: 'Signature T-Shirt',
                           price: '£14.99',
                           imageUrl:
                               'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                          productId: '4',
                         ),
                       ],
                     ),
