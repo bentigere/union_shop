@@ -161,7 +161,7 @@ class _NavBarIcons extends StatelessWidget {
         ),
         IconButton(
           icon: const Icon(Icons.shopping_bag_outlined, color: Colors.grey),
-          onPressed: () {},
+          onPressed: () => Navigator.pushNamed(context, '/cart'),
         ),
         if (isMobile)
           IconButton(
