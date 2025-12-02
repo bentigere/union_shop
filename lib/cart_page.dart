@@ -85,89 +85,45 @@ class _CartPageState extends State<CartPage> {
                       ),
                     )
                   else
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Cart Items List
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            children: _cart.items.map((item) => _buildCartItem(item)).toList(),
-                          ),
-                        ),
-                        const SizedBox(width: 24),
-                        // Order Summary
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            padding: const EdgeInsets.all(24),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.grey[200]!),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Order Summary',
-                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        if (constraints.maxWidth > 800) {
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Cart Items List
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  children: _cart.items
+                                      .map((item) => _buildCartItem(item))
+                                      .toList(),
                                 ),
-                                const SizedBox(height: 16),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text('Subtotal'),
-                                    Text('£${_cart.totalAmount.toStringAsFixed(2)}'),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                const Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Shipping'),
-                                    Text('Free'),
-                                  ],
-                                ),
-                                const Divider(height: 32),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      'Total',
-                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      '£${_cart.totalAmount.toStringAsFixed(2)}',
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFF4d2963),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 24),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    onPressed: _processCheckout,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF4d2963),
-                                      foregroundColor: Colors.white,
-                                      padding: const EdgeInsets.symmetric(vertical: 16),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                    child: const Text('Checkout'),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                              ),
+                              const SizedBox(width: 24),
+                              // Order Summary
+                              Expanded(
+                                flex: 1,
+                                child: _buildOrderSummary(),
+                              ),
+                            ],
+                          );
+                        } else {
+                          return Column(
+                            children: [
+                              // Cart Items List
+                              Column(
+                                children: _cart.items
+                                    .map((item) => _buildCartItem(item))
+                                    .toList(),
+                              ),
+                              const SizedBox(height: 24),
+                              // Order Summary
+                              _buildOrderSummary(),
+                            ],
+                          );
+                        }
+                      },
                     ),
                 ],
               ),
@@ -175,6 +131,76 @@ class _CartPageState extends State<CartPage> {
             const Footer(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildOrderSummary() {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey[200]!),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Order Summary',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Subtotal'),
+              Text('£${_cart.totalAmount.toStringAsFixed(2)}'),
+            ],
+          ),
+          const SizedBox(height: 8),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Shipping'),
+              Text('Free'),
+            ],
+          ),
+          const Divider(height: 32),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Total',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                '£${_cart.totalAmount.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF4d2963),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: _processCheckout,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF4d2963),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text('Checkout'),
+            ),
+          ),
+        ],
       ),
     );
   }

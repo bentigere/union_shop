@@ -23,6 +23,16 @@ class _CollectionsPageState extends State<CollectionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    int crossAxisCount = 1;
+    if (screenWidth > 1200) {
+      crossAxisCount = 4;
+    } else if (screenWidth > 800) {
+      crossAxisCount = 3;
+    } else if (screenWidth > 600) {
+      crossAxisCount = 2;
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -46,8 +56,7 @@ class _CollectionsPageState extends State<CollectionsPage> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount:
-                          MediaQuery.of(context).size.width > 800 ? 3 : 1,
+                      crossAxisCount: crossAxisCount,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 24,
                       childAspectRatio: 1.5,

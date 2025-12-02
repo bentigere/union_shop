@@ -195,11 +195,13 @@ class _CollectionProductsPageState extends State<CollectionProductsPage> {
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: MediaQuery.of(context).size.width > 900
+                                crossAxisCount: MediaQuery.of(context).size.width > 1200
                                     ? 4
-                                    : MediaQuery.of(context).size.width > 600
-                                        ? 2
-                                        : 1,
+                                    : MediaQuery.of(context).size.width > 800
+                                        ? 3
+                                        : MediaQuery.of(context).size.width > 600
+                                            ? 2
+                                            : 1,
                                 crossAxisSpacing: 24,
                                 mainAxisSpacing: 48,
                                 childAspectRatio: 0.7,

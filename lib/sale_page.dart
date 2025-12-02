@@ -63,7 +63,13 @@ class SalePage extends StatelessWidget {
               child: GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
+                crossAxisCount: MediaQuery.of(context).size.width > 1200
+                    ? 4
+                    : MediaQuery.of(context).size.width > 800
+                        ? 3
+                        : MediaQuery.of(context).size.width > 600
+                            ? 2
+                            : 1,
                 crossAxisSpacing: 24,
                 mainAxisSpacing: 48,
                 childAspectRatio: 0.7,

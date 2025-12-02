@@ -68,6 +68,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Determine crossAxisCount based on screen width
+    int crossAxisCount = 1;
+    if (screenWidth > 1200) {
+      crossAxisCount = 4;
+    } else if (screenWidth > 800) {
+      crossAxisCount = 3;
+    } else if (screenWidth > 600) {
+      crossAxisCount = 2;
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -77,7 +89,7 @@ class HomeScreen extends StatelessWidget {
 
             // Hero Section
             SizedBox(
-              height: 400,
+              height: screenWidth > 800 ? 500 : 400, // Taller hero on desktop
               width: double.infinity,
               child: Stack(
                 children: [
@@ -103,45 +115,60 @@ class HomeScreen extends StatelessWidget {
                   Positioned(
                     left: 24,
                     right: 24,
-                    top: 80,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Essential Range - Over 20% OFF!',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            height: 1.2,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          "Over 20% off our Essential Range. Come and grab yours while stock lasts!",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            height: 1.5,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 32),
-                        ElevatedButton(
-                          onPressed: () => navigateToCollections(context),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4d2963),
-                            foregroundColor: Colors.white,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
+                    top: 0,
+                    bottom: 0,
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 800),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Essential Range - Over 20% OFF!',
+                              style: TextStyle(
+                                fontSize: screenWidth > 600 ? 48 : 32,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                height: 1.2,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                          ),
-                          child: const Text(
-                            'BROWSE COLLECTION',
-                            style: TextStyle(fontSize: 14, letterSpacing: 1),
-                          ),
+                            const SizedBox(height: 24),
+                            Text(
+                              "Over 20% off our Essential Range. Come and grab yours while stock lasts!",
+                              style: TextStyle(
+                                fontSize: screenWidth > 600 ? 24 : 18,
+                                color: Colors.white,
+                                height: 1.5,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 40),
+                            ElevatedButton(
+                              onPressed: () => navigateToCollections(context),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF4d2963),
+                                foregroundColor: Colors.white,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth > 600 ? 48 : 32,
+                                  vertical: screenWidth > 600 ? 24 : 16,
+                                ),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.zero,
+                                ),
+                              ),
+                              child: Text(
+                                'BROWSE COLLECTION',
+                                style: TextStyle(
+                                  fontSize: screenWidth > 600 ? 16 : 14,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -152,25 +179,32 @@ class HomeScreen extends StatelessWidget {
             Container(
               color: Colors.white,
               child: Padding(
-                padding: const EdgeInsets.all(40.0),
+                padding: EdgeInsets.symmetric(
+                  vertical: 40.0,
+                  horizontal: screenWidth > 1200
+                      ? (screenWidth - 1200) / 2 + 40
+                      : 24.0,
+                ),
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       'ESSENTIAL RANGE - OVER 20% OFF!',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: screenWidth > 600 ? 24 : 20,
                         color: Colors.black,
                         letterSpacing: 1,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 48),
                     GridView.count(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount:
-                          MediaQuery.of(context).size.width > 600 ? 2 : 1,
+                      crossAxisCount: crossAxisCount,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
+                      childAspectRatio:
+                          0.75, // Adjusted for better card proportions
                       children: const [
                         ProductCard(
                           title: 'Limited Edition Essential Zip Hoodies',
