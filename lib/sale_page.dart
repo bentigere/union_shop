@@ -24,8 +24,8 @@ class SalePage extends StatelessWidget {
               width: double.infinity,
               color: Colors.redAccent,
               padding: const EdgeInsets.all(24),
-              child: Column(
-                children: const [
+              child: const Column(
+                children: [
                   Text(
                     'CLEARANCE SALE',
                     style: TextStyle(

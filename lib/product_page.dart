@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/models/cart_model.dart';
+import 'package:union_shop/models/product_model.dart';
+import 'package:union_shop/services/product_service.dart';
 import 'package:union_shop/widgets/navbar.dart';
 import 'package:union_shop/widgets/footer.dart';
 import 'package:union_shop/widgets/product_card.dart';
@@ -12,15 +14,61 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  final ProductService _productService = ProductService();
+  Product? _product;
+  bool _isLoading = true;
+
   String? selectedSize;
   String? selectedColor;
   int quantity = 1;
 
-  final List<String> sizes = ['Small', 'Medium', 'Large', 'X-Large'];
-  final List<String> colors = ['Black', 'Navy', 'Grey', 'White'];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadProduct();
+  }
+
+  void _loadProduct() {
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args is String) {
+      setState(() {
+        _product = _productService.getProductById(args);
+        _isLoading = false;
+        _initializeSelections();
+      });
+    } else {
+      // Fallback for testing or direct navigation
+      setState(() {
+        final products = _productService.getProducts();
+        if (products.isNotEmpty) {
+          _product = products.first;
+        }
+        _isLoading = false;
+        _initializeSelections();
+      });
+    }
+  }
+
+  void _initializeSelections() {
+    if (_product != null) {
+      if (_product!.sizes.isNotEmpty) selectedSize = _product!.sizes.first;
+      if (_product!.colors.isNotEmpty) selectedColor = _product!.colors.first;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    if (_product == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Product Not Found')),
+        body: const Center(child: Text('Product not found')),
+      );
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -146,7 +194,7 @@ class _ProductPageState extends State<ProductPage> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Image.network(
-          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+          _product!.imageUrl,
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) => const Center(
             child: Icon(Icons.image_not_supported, size: 64, color: Colors.grey),
@@ -160,14 +208,29 @@ class _ProductPageState extends State<ProductPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Premium Union Hoodie',
-          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+        Text(
+          _product!.title,
+          style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        const Text(
-          '£35.00',
-          style: TextStyle(fontSize: 24, color: Color(0xFF4d2963), fontWeight: FontWeight.bold),
+        Row(
+          children: [
+            Text(
+              '£${_product!.price.toStringAsFixed(2)}',
+              style: const TextStyle(fontSize: 24, color: Color(0xFF4d2963), fontWeight: FontWeight.bold),
+            ),
+            if (_product!.originalPrice != null) ...[
+              const SizedBox(width: 16),
+              Text(
+                '£${_product!.originalPrice!.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey,
+                  decoration: TextDecoration.lineThrough,
+                ),
+              ),
+            ],
+          ],
         ),
         const SizedBox(height: 16),
         Row(
@@ -188,14 +251,16 @@ class _ProductPageState extends State<ProductPage> {
         ),
         const SizedBox(height: 8),
         Text(
-          'Stay warm and stylish with our Premium Union Hoodie. Made from high-quality cotton blend material, this hoodie features the official Union logo embroidered on the chest. Perfect for campus life or casual wear.',
+          'This high-quality ${_product!.title} is perfect for showing your university pride. Made from premium materials for comfort and durability.',
           style: TextStyle(color: Colors.grey[700], height: 1.5),
         ),
         const SizedBox(height: 32),
         
         // Options
+        if (_product!.sizes.isNotEmpty || _product!.colors.isNotEmpty)
         Row(
           children: [
+            if (_product!.sizes.isNotEmpty)
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,7 +274,7 @@ class _ProductPageState extends State<ProductPage> {
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     ),
-                    items: sizes.map((String size) {
+                    items: _product!.sizes.map((String size) {
                       return DropdownMenuItem<String>(
                         value: size,
                         child: Text(size),
@@ -224,7 +289,9 @@ class _ProductPageState extends State<ProductPage> {
                 ],
               ),
             ),
-            const SizedBox(width: 16),
+            if (_product!.sizes.isNotEmpty && _product!.colors.isNotEmpty)
+              const SizedBox(width: 16),
+            if (_product!.colors.isNotEmpty)
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -238,7 +305,7 @@ class _ProductPageState extends State<ProductPage> {
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     ),
-                    items: colors.map((String color) {
+                    items: _product!.colors.map((String color) {
                       return DropdownMenuItem<String>(
                         value: color,
                         child: Text(color),
@@ -289,15 +356,23 @@ class _ProductPageState extends State<ProductPage> {
               child: ElevatedButton(
                 onPressed: () {
                   Cart().addItem(
-                    'Premium Union Hoodie',
-                    35.00,
-                    'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                    _product!.title,
+                    _product!.price,
+                    _product!.imageUrl,
                     quantity,
                     selectedSize,
                     selectedColor,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Added to cart')),
+                    SnackBar(
+                      content: Text('Added $quantity x ${_product!.title} to cart'),
+                      action: SnackBarAction(
+                        label: 'VIEW CART',
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/cart');
+                        },
+                      ),
+                    ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -315,7 +390,17 @@ class _ProductPageState extends State<ProductPage> {
         SizedBox(
           width: double.infinity,
           child: OutlinedButton(
-            onPressed: () {},
+            onPressed: () {
+               Cart().addItem(
+                    _product!.title,
+                    _product!.price,
+                    _product!.imageUrl,
+                    quantity,
+                    selectedSize,
+                    selectedColor,
+                  );
+               Navigator.pushNamed(context, '/cart');
+            },
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 16),
               side: const BorderSide(color: Color(0xFF4d2963), width: 2),
