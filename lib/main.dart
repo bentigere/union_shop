@@ -4,6 +4,8 @@ import 'package:union_shop/collection_products_page.dart';
 import "package:union_shop/collections_page.dart";
 import 'package:flutter/material.dart';
 import 'package:union_shop/login_page.dart';
+import 'package:union_shop/print_shack_about_page.dart';
+import 'package:union_shop/print_shack_page.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/widgets/footer.dart';
@@ -38,6 +40,8 @@ class UnionShopApp extends StatelessWidget {
         '/collections': (context) => const CollectionsPage(),
         '/collection-products': (context) => const CollectionProductsPage(),
         '/cart': (context) => const CartPage(),
+        '/print-shack': (context) => const PrintShackPage(),
+        '/print-shack-about': (context) => const PrintShackAboutPage(),
       },
     );
   }
