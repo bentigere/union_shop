@@ -123,6 +123,7 @@ class _RegisterFormState extends State<_RegisterForm> {
                   
                   Future.delayed(const Duration(seconds: 1), () {
                     if (mounted) {
+                      // ignore: use_build_context_synchronously
                       Navigator.pop(context); // Go back to login
                     }
                   });

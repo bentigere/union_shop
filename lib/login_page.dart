@@ -99,6 +99,7 @@ class _LoginFormState extends State<_LoginForm> {
                   
                   Future.delayed(const Duration(seconds: 1), () {
                     if (mounted) {
+                      // ignore: use_build_context_synchronously
                       Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
                     }
                   });

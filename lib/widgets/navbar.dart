@@ -198,6 +198,7 @@ class _NavBarIcons extends StatelessWidget {
         ListenableBuilder(
           listenable: Cart(),
           builder: (context, child) {
+            // ignore: avoid_print
             print('NavBar rebuilding. Cart count: ${Cart().itemCount}');
             return IconButton(
               icon: Badge(
