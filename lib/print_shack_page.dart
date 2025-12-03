@@ -11,10 +11,19 @@ class PrintShackPage extends StatefulWidget {
 
 class _PrintShackPageState extends State<PrintShackPage> {
   String _selectedProduct = 'T-Shirt';
-  String _customText = '';
+  final List<TextEditingController> _controllers = List.generate(5, (_) => TextEditingController());
+  int _selectedLines = 1;
   String _selectedFont = 'Roboto';
   String _selectedColorName = 'Black';
   Color _selectedColor = Colors.black;
+
+  @override
+  void dispose() {
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
 
   final Map<String, double> _basePrices = {
     'T-Shirt': 15.00,
@@ -107,19 +116,35 @@ class _PrintShackPageState extends State<PrintShackPage> {
         ),
         const SizedBox(height: 24),
 
+        // Number of Lines Selection
+        _buildDropdown(
+          'Number of Lines',
+          _selectedLines.toString(),
+          ['1', '2', '3', '4', '5'],
+          (val) => setState(() => _selectedLines = int.parse(val!)),
+        ),
+        const SizedBox(height: 24),
+
         // Text Input
         const Text('Custom Text', style: TextStyle(fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
-        TextField(
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Enter your text here...',
-            helperText: 'Max 20 characters',
-          ),
-          maxLength: 20,
-          onChanged: (val) => setState(() => _customText = val),
-        ),
-        const SizedBox(height: 16),
+        ...List.generate(_selectedLines, (index) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12.0),
+            child: TextField(
+              controller: _controllers[index],
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                hintText: 'Line ${index + 1}',
+                helperText: 'Max 20 characters',
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              ),
+              maxLength: 20,
+              onChanged: (_) => setState(() {}),
+            ),
+          );
+        }),
+        const SizedBox(height: 4),
 
         // Font Selection
         _buildDropdown(
@@ -292,7 +317,9 @@ class _PrintShackPageState extends State<PrintShackPage> {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  _customText.isEmpty ? 'Your Text' : _customText,
+                  _controllers.take(_selectedLines).every((c) => c.text.isEmpty)
+                      ? 'Your Text'
+                      : _controllers.take(_selectedLines).map((c) => c.text).join('\n'),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: _getFontFamily(),

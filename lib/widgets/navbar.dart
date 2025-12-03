@@ -79,7 +79,7 @@ class DesktopNavBar extends StatelessWidget {
                 itemBuilder: (context) => [
                   const PopupMenuItem(
                     value: '/print-shack',
-                    child: Text('Print Services'),
+                    child: Text('Personalize'),
                   ),
                   const PopupMenuItem(
                     value: '/print-shack-about',
