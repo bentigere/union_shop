@@ -1,45 +1,47 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login', style: TextStyle(color: Colors.white)),
+        title: const Text('Register', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF4d2963),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 600),
-          child: _LoginForm(),
+          child: _RegisterForm(),
         ),
       ),
     );
   }
 }
 
-class _LoginForm extends StatefulWidget {
+class _RegisterForm extends StatefulWidget {
   @override
-  State<_LoginForm> createState() => _LoginFormState();
+  State<_RegisterForm> createState() => _RegisterFormState();
 }
 
-class _LoginFormState extends State<_LoginForm> {
+class _RegisterFormState extends State<_RegisterForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -85,6 +87,28 @@ class _LoginFormState extends State<_LoginForm> {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your password';
                 }
+                if (value.length < 6) {
+                  return 'Password must be at least 6 characters';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _confirmPasswordController,
+              decoration: const InputDecoration(
+                labelText: 'Confirm Password',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.lock_outline),
+              ),
+              obscureText: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please confirm your password';
+                }
+                if (value != _passwordController.text) {
+                  return 'Passwords do not match';
+                }
                 return null;
               },
             ),
@@ -92,14 +116,14 @@ class _LoginFormState extends State<_LoginForm> {
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  // Simulate login success and navigate to home
+                  // Simulate registration success
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Login Successful! Redirecting...')),
+                    const SnackBar(content: Text('Registration Successful! Please Login.')),
                   );
                   
                   Future.delayed(const Duration(seconds: 1), () {
                     if (mounted) {
-                      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                      Navigator.pop(context); // Go back to login
                     }
                   });
                 }
@@ -109,27 +133,7 @@ class _LoginFormState extends State<_LoginForm> {
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
-              child: const Text('LOGIN'),
-            ),
-            const SizedBox(height: 16),
-            TextButton(
-              onPressed: () {
-                // TODO: Implement forgot password
-              },
-              child: const Text('Forgot Password?'),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Don't have an account?"),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/register');
-                  },
-                  child: const Text('Register'),
-                ),
-              ],
+              child: const Text('REGISTER'),
             ),
           ],
         ),
@@ -137,5 +141,3 @@ class _LoginFormState extends State<_LoginForm> {
     );
   }
 }
-
-
