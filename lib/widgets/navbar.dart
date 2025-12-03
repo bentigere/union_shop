@@ -64,7 +64,7 @@ class DesktopNavBar extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(width: 40),
+        const Spacer(),
         // Navigation Links
         Row(
           children: [
