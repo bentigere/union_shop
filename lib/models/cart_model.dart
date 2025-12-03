@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartItem {
   final String title;
@@ -18,12 +20,37 @@ class CartItem {
   });
 
   double get total => price * quantity;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'price': price,
+      'imageUrl': imageUrl,
+      'quantity': quantity,
+      'size': size,
+      'color': color,
+    };
+  }
+
+  factory CartItem.fromJson(Map<String, dynamic> json) {
+    return CartItem(
+      title: json['title'],
+      price: json['price'],
+      imageUrl: json['imageUrl'],
+      quantity: json['quantity'],
+      size: json['size'],
+      color: json['color'],
+    );
+  }
 }
 
 class Cart extends ChangeNotifier {
   static final Cart _instance = Cart._internal();
   factory Cart() => _instance;
-  Cart._internal();
+  
+  Cart._internal() {
+    _loadCart();
+  }
 
   final List<CartItem> _items = [];
 
@@ -33,15 +60,30 @@ class Cart extends ChangeNotifier {
 
   int get itemCount => _items.fold(0, (sum, item) => sum + item.quantity);
 
+  Future<void> _loadCart() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? cartJson = prefs.getString('cart_items');
+    if (cartJson != null) {
+      final List<dynamic> decodedList = jsonDecode(cartJson);
+      _items.clear();
+      _items.addAll(decodedList.map((item) => CartItem.fromJson(item)).toList());
+      notifyListeners();
+    }
+  }
+
+  Future<void> _saveCart() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String encodedList = jsonEncode(_items.map((item) => item.toJson()).toList());
+    await prefs.setString('cart_items', encodedList);
+  }
+
   void addItem(String title, double price, String imageUrl, int quantity, String? size, String? color) {
-    print('Adding item: $title, quantity: $quantity');
     // Check if item already exists with same size/color
     try {
       final existingItem = _items.firstWhere((item) => 
         item.title == title && item.size == size && item.color == color
       );
       existingItem.quantity += quantity;
-      print('Updated existing item quantity to: ${existingItem.quantity}');
     } catch (e) {
       _items.add(CartItem(
         title: title,
@@ -51,14 +93,14 @@ class Cart extends ChangeNotifier {
         size: size,
         color: color,
       ));
-      print('Added new item. Total items: ${_items.length}');
     }
-    print('Total cart count: $itemCount');
+    _saveCart();
     notifyListeners();
   }
 
   void removeItem(CartItem item) {
     _items.remove(item);
+    _saveCart();
     notifyListeners();
   }
 
@@ -67,12 +109,14 @@ class Cart extends ChangeNotifier {
       removeItem(item);
     } else {
       item.quantity = quantity;
+      _saveCart();
       notifyListeners();
     }
   }
 
   void clear() {
     _items.clear();
+    _saveCart();
     notifyListeners();
   }
 }
