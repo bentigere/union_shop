@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/models/cart_model.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
@@ -160,9 +161,18 @@ class _NavBarIcons extends StatelessWidget {
           icon: const Icon(Icons.person_outline, color: Colors.grey),
           onPressed: () => Navigator.pushNamed(context, '/login'),
         ),
-        IconButton(
-          icon: const Icon(Icons.shopping_bag_outlined, color: Colors.grey),
-          onPressed: () => Navigator.pushNamed(context, '/cart'),
+        AnimatedBuilder(
+          animation: Cart(),
+          builder: (context, child) {
+            return IconButton(
+              icon: Badge(
+                isLabelVisible: Cart().itemCount > 0,
+                label: Text('${Cart().itemCount}'),
+                child: const Icon(Icons.shopping_bag_outlined, color: Colors.grey),
+              ),
+              onPressed: () => Navigator.pushNamed(context, '/cart'),
+            );
+          },
         ),
         if (isMobile)
           IconButton(

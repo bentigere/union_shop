@@ -268,7 +268,7 @@ class _ProductPageState extends State<ProductPage> {
                   const Text('Size', style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   DropdownButtonFormField<String>(
-                    value: selectedSize,
+                    initialValue: selectedSize,
                     hint: const Text('Select Size'),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -299,7 +299,7 @@ class _ProductPageState extends State<ProductPage> {
                   const Text('Color', style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   DropdownButtonFormField<String>(
-                    value: selectedColor,
+                    initialValue: selectedColor,
                     hint: const Text('Select Color'),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),

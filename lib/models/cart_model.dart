@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class CartItem {
   final String title;
   final double price;
@@ -68,25 +70,5 @@ class Cart extends ChangeNotifier {
   void clear() {
     _items.clear();
     notifyListeners();
-  }
-}
-
-// Simple ChangeNotifier implementation since we don't have provider package
-// and we want to listen to changes.
-abstract class ChangeNotifier {
-  final List<Function> _listeners = [];
-
-  void addListener(Function listener) {
-    _listeners.add(listener);
-  }
-
-  void removeListener(Function listener) {
-    _listeners.remove(listener);
-  }
-
-  void notifyListeners() {
-    for (var listener in _listeners) {
-      listener();
-    }
   }
 }
