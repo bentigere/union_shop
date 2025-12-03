@@ -161,9 +161,10 @@ class _NavBarIcons extends StatelessWidget {
           icon: const Icon(Icons.person_outline, color: Colors.grey),
           onPressed: () => Navigator.pushNamed(context, '/login'),
         ),
-        AnimatedBuilder(
-          animation: Cart(),
+        ListenableBuilder(
+          listenable: Cart(),
           builder: (context, child) {
+            print('NavBar rebuilding. Cart count: ${Cart().itemCount}');
             return IconButton(
               icon: Badge(
                 isLabelVisible: Cart().itemCount > 0,

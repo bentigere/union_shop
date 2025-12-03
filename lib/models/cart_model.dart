@@ -34,12 +34,14 @@ class Cart extends ChangeNotifier {
   int get itemCount => _items.fold(0, (sum, item) => sum + item.quantity);
 
   void addItem(String title, double price, String imageUrl, int quantity, String? size, String? color) {
+    print('Adding item: $title, quantity: $quantity');
     // Check if item already exists with same size/color
     try {
       final existingItem = _items.firstWhere((item) => 
         item.title == title && item.size == size && item.color == color
       );
       existingItem.quantity += quantity;
+      print('Updated existing item quantity to: ${existingItem.quantity}');
     } catch (e) {
       _items.add(CartItem(
         title: title,
@@ -49,7 +51,9 @@ class Cart extends ChangeNotifier {
         size: size,
         color: color,
       ));
+      print('Added new item. Total items: ${_items.length}');
     }
+    print('Total cart count: $itemCount');
     notifyListeners();
   }
 
