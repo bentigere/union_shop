@@ -60,6 +60,19 @@ class Footer extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 8),
+                        TextButton.icon(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/search');
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.white70,
+                            padding: EdgeInsets.zero,
+                            alignment: Alignment.centerLeft,
+                          ),
+                          icon: const Icon(Icons.search, size: 16),
+                          label: const Text('Search Products'),
+                        ),
                       ],
                     ),
                   ),

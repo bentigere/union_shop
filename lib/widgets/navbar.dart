@@ -189,7 +189,7 @@ class _NavBarIcons extends StatelessWidget {
       children: [
         IconButton(
           icon: const Icon(Icons.search, color: Colors.grey),
-          onPressed: () {},
+          onPressed: () => Navigator.pushNamed(context, '/search'),
         ),
         IconButton(
           icon: const Icon(Icons.person_outline, color: Colors.grey),

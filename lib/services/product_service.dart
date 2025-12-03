@@ -152,4 +152,12 @@ class ProductService {
       return null;
     }
   }
+
+  List<Product> searchProducts(String query) {
+    if (query.isEmpty) return [];
+    final lowercaseQuery = query.toLowerCase();
+    return _allProducts.where((p) => 
+      p.title.toLowerCase().contains(lowercaseQuery)
+    ).toList();
+  }
 }
