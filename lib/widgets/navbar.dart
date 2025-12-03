@@ -108,7 +108,6 @@ class DesktopNavBar extends StatelessWidget {
             ),
             _NavBarLink(title: 'About Us', onTap: () => Navigator.pushNamed(context, '/about')),
             _NavBarLink(title: 'Sale', onTap: () => Navigator.pushNamed(context, '/sale'), isSale: true),
-            _NavBarLink(title: 'Contact', onTap: () {}), // Placeholder
           ],
         ),
         const Spacer(),
