@@ -214,7 +214,7 @@ class _NavBarIcons extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.menu, color: Colors.grey),
             onPressed: () {
-              // Placeholder for menu action
+              Scaffold.of(context).openDrawer();
             },
           ),
       ],

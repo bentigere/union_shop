@@ -10,6 +10,7 @@ import 'package:union_shop/product_page.dart';
 import 'package:union_shop/register_page.dart';
 import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/search_page.dart';
+import 'package:union_shop/widgets/drawer_widget.dart';
 import 'package:union_shop/widgets/footer.dart';
 import 'package:union_shop/widgets/navbar.dart';
 import 'package:union_shop/widgets/product_card.dart';
@@ -85,6 +86,7 @@ class HomeScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      drawer: const AppDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
