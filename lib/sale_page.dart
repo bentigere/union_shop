@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/footer.dart';
+import 'package:union_shop/widgets/navbar.dart';
 import 'package:union_shop/widgets/product_card.dart';
 
 class SalePage extends StatelessWidget {
@@ -8,17 +9,10 @@ class SalePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'BIG SALE',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: const Color(0xFF4d2963),
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const NavBar(),
             // Promotional Banner
             Container(
               width: double.infinity,
