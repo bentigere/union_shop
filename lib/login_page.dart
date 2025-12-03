@@ -92,10 +92,16 @@ class _LoginFormState extends State<_LoginForm> {
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  // TODO: Implement login logic
+                  // Simulate login success and navigate to home
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Login Data')),
+                    const SnackBar(content: Text('Login Successful! Redirecting...')),
                   );
+                  
+                  Future.delayed(const Duration(seconds: 1), () {
+                    if (mounted) {
+                      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                    }
+                  });
                 }
               },
               style: ElevatedButton.styleFrom(
