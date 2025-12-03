@@ -63,6 +63,12 @@ class _LoginFormState extends State<_LoginForm> {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your email';
                 }
+                final email = value.toLowerCase();
+                if (!email.endsWith('@gmail.com') && 
+                    !email.endsWith('@hotmail.com') && 
+                    !email.endsWith('@hotmail.co.uk')) {
+                  return 'Please use a valid Gmail or Hotmail address';
+                }
                 return null;
               },
             ),
