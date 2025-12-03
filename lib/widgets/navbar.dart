@@ -70,7 +70,42 @@ class DesktopNavBar extends StatelessWidget {
           children: [
             _NavBarLink(title: 'Home', onTap: () => Navigator.pushNamed(context, '/')),
             _NavBarLink(title: 'Shop', onTap: () => Navigator.pushNamed(context, '/collections')),
-            _NavBarLink(title: 'Print Shack', onTap: () => Navigator.pushNamed(context, '/print-shack-about')),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: PopupMenuButton<String>(
+                tooltip: 'Print Shack',
+                offset: const Offset(0, 40),
+                onSelected: (value) => Navigator.pushNamed(context, value),
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    value: '/print-shack',
+                    child: Text('Print Services'),
+                  ),
+                  const PopupMenuItem(
+                    value: '/print-shack-about',
+                    child: Text('About Printshack'),
+                  ),
+                ],
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Print Shack',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      Icon(Icons.arrow_drop_down, color: Colors.black87, size: 20),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             _NavBarLink(title: 'About Us', onTap: () => Navigator.pushNamed(context, '/about')),
             _NavBarLink(title: 'Sale', onTap: () => Navigator.pushNamed(context, '/sale'), isSale: true),
             _NavBarLink(title: 'Contact', onTap: () {}), // Placeholder
