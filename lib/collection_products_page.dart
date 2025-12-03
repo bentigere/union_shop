@@ -49,6 +49,8 @@ class _CollectionProductsPageState extends State<CollectionProductsPage> {
 
     // Simulate network delay
     Future.delayed(const Duration(milliseconds: 500), () {
+      if (!mounted) return;
+      
       final products = _productService.getProducts(
         collectionId: 'clothing', // Defaulting to clothing for this demo
         sortBy: _selectedSort,

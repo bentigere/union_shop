@@ -71,6 +71,33 @@ class ProductService {
       collectionId: 'accessories',
       colors: ['Natural'],
     ),
+    const Product(
+      id: '9',
+      title: 'Basic Tee - Black',
+      price: 9.99,
+      imageUrl: 'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+      collectionId: 'clothing',
+      sizes: ['S', 'M', 'L', 'XL'],
+      colors: ['Black'],
+    ),
+    const Product(
+      id: '10',
+      title: 'Premium Hoodie',
+      price: 55.00,
+      imageUrl: 'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+      collectionId: 'clothing',
+      sizes: ['M', 'L'],
+      colors: ['Grey'],
+    ),
+    const Product(
+      id: '11',
+      title: 'Union Socks',
+      price: 5.00,
+      imageUrl: 'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+      collectionId: 'clothing',
+      sizes: ['One Size'],
+      colors: ['White'],
+    ),
   ];
 
   List<Product> getProducts({
