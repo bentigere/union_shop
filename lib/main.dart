@@ -223,21 +223,21 @@ class HomeScreen extends StatelessWidget {
                           title: 'Essential T shirt',
                           price: '£6.99',
                           imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                              'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&h=1000&fit=crop',
                           productId: '2',
                         ),
                         ProductCard(
                           title: 'Signature Hoodie',
                           price: '£32.99',
                           imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                              'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&h=1000&fit=crop',
                           productId: '3',
                         ),
                         ProductCard(
                           title: 'Signature T-Shirt',
                           price: '£14.99',
                           imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                              'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&h=1000&fit=crop',
                           productId: '4',
                         ),
                       ],
