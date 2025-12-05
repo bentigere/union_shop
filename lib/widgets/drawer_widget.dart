@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -36,7 +37,7 @@ class AppDrawer extends StatelessWidget {
             title: const Text('Home'),
             onTap: () {
               Navigator.pop(context); // Close drawer
-              Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+              context.go('/');
             },
           ),
           ListTile(
@@ -44,7 +45,7 @@ class AppDrawer extends StatelessWidget {
             title: const Text('Shop Collections'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/collections');
+              context.go('/collections');
             },
           ),
           ExpansionTile(
@@ -56,7 +57,7 @@ class AppDrawer extends StatelessWidget {
                 contentPadding: const EdgeInsets.only(left: 72),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, '/print-shack');
+                  context.go('/print-shack');
                 },
               ),
               ListTile(
@@ -64,7 +65,7 @@ class AppDrawer extends StatelessWidget {
                 contentPadding: const EdgeInsets.only(left: 72),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, '/print-shack-about');
+                  context.go('/print-shack-about');
                 },
               ),
             ],
@@ -74,7 +75,7 @@ class AppDrawer extends StatelessWidget {
             title: const Text('About Us'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/about');
+              context.go('/about');
             },
           ),
           ListTile(
@@ -82,7 +83,7 @@ class AppDrawer extends StatelessWidget {
             title: const Text('Sale'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/sale');
+              context.go('/sale');
             },
           ),
           const Divider(),
@@ -91,7 +92,7 @@ class AppDrawer extends StatelessWidget {
             title: const Text('Search'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/search');
+              context.go('/search');
             },
           ),
           ListTile(
@@ -99,7 +100,7 @@ class AppDrawer extends StatelessWidget {
             title: const Text('Cart'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/cart');
+              context.go('/cart');
             },
           ),
           const Divider(),
@@ -108,7 +109,7 @@ class AppDrawer extends StatelessWidget {
             title: const Text('Login'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/login');
+              context.go('/login');
             },
           ),
           ListTile(
@@ -116,7 +117,7 @@ class AppDrawer extends StatelessWidget {
             title: const Text('Register'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/register');
+              context.go('/register');
             },
           ),
         ],

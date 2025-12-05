@@ -6,7 +6,9 @@ import 'package:union_shop/widgets/navbar.dart';
 import 'package:union_shop/widgets/product_card.dart';
 
 class CollectionProductsPage extends StatefulWidget {
-  const CollectionProductsPage({super.key});
+  final String? collectionId;
+  
+  const CollectionProductsPage({super.key, this.collectionId});
 
   @override
   State<CollectionProductsPage> createState() => _CollectionProductsPageState();
@@ -52,7 +54,7 @@ class _CollectionProductsPageState extends State<CollectionProductsPage> {
       if (!mounted) return;
       
       final products = _productService.getProducts(
-        collectionId: 'clothing', // Defaulting to clothing for this demo
+        collectionId: widget.collectionId ?? 'clothing', // Use passed collectionId or default
         sortBy: _selectedSort,
         filterSize: _selectedSize,
         filterColor: _selectedColor,

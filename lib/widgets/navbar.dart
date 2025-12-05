@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/models/cart_model.dart';
+import 'package:go_router/go_router.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
@@ -11,7 +12,7 @@ class NavBar extends StatelessWidget {
         // Top banner
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/sale');
+            context.go('/sale');
           },
           child: Container(
             width: double.infinity,
@@ -68,14 +69,14 @@ class DesktopNavBar extends StatelessWidget {
         // Navigation Links
         Row(
           children: [
-            _NavBarLink(title: 'Home', onTap: () => Navigator.pushNamed(context, '/')),
-            _NavBarLink(title: 'Shop', onTap: () => Navigator.pushNamed(context, '/collections')),
+            _NavBarLink(title: 'Home', onTap: () => context.go('/')),
+            _NavBarLink(title: 'Shop', onTap: () => context.go('/collections')),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: PopupMenuButton<String>(
                 tooltip: 'Print Shack',
                 offset: const Offset(0, 40),
-                onSelected: (value) => Navigator.pushNamed(context, value),
+                onSelected: (value) => context.go(value),
                 itemBuilder: (context) => [
                   const PopupMenuItem(
                     value: '/print-shack',
@@ -106,8 +107,8 @@ class DesktopNavBar extends StatelessWidget {
                 ),
               ),
             ),
-            _NavBarLink(title: 'About Us', onTap: () => Navigator.pushNamed(context, '/about')),
-            _NavBarLink(title: 'Sale', onTap: () => Navigator.pushNamed(context, '/sale'), isSale: true),
+            _NavBarLink(title: 'About Us', onTap: () => context.go('/about')),
+            _NavBarLink(title: 'Sale', onTap: () => context.go('/sale'), isSale: true),
           ],
         ),
         const Spacer(),
@@ -189,11 +190,11 @@ class _NavBarIcons extends StatelessWidget {
       children: [
         IconButton(
           icon: const Icon(Icons.search, color: Colors.grey),
-          onPressed: () => Navigator.pushNamed(context, '/search'),
+          onPressed: () => context.go('/search'),
         ),
         IconButton(
           icon: const Icon(Icons.person_outline, color: Colors.grey),
-          onPressed: () => Navigator.pushNamed(context, '/login'),
+          onPressed: () => context.go('/login'),
         ),
         ListenableBuilder(
           listenable: Cart(),
@@ -206,7 +207,7 @@ class _NavBarIcons extends StatelessWidget {
                 label: Text('${Cart().itemCount}'),
                 child: const Icon(Icons.shopping_bag_outlined, color: Colors.grey),
               ),
-              onPressed: () => Navigator.pushNamed(context, '/cart'),
+              onPressed: () => context.go('/cart'),
             );
           },
         ),

@@ -14,61 +14,271 @@ import 'package:union_shop/widgets/drawer_widget.dart';
 import 'package:union_shop/widgets/footer.dart';
 import 'package:union_shop/widgets/navbar.dart';
 import 'package:union_shop/widgets/product_card.dart';
+import 'package:go_router/go_router.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 void main() {
   runApp(const UnionShopApp());
 }
+
+// Configure GoRouter for deep linking
+final GoRouter _router = GoRouter(
+  initialLocation: '/',
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/product',
+      builder: (context, state) => const ProductPage(),
+    ),
+    GoRoute(
+      path: '/about',
+      builder: (context, state) => const AboutPage(),
+    ),
+    GoRoute(
+      path: '/sale',
+      builder: (context, state) => const SalePage(),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/register',
+      builder: (context, state) => const RegisterPage(),
+    ),
+    GoRoute(
+      path: '/collections',
+      builder: (context, state) => const CollectionsPage(),
+    ),
+    GoRoute(
+      path: '/collections/:collectionId',
+      builder: (context, state) {
+        final collectionId = state.pathParameters['collectionId'];
+        return CollectionProductsPage(collectionId: collectionId);
+      },
+    ),
+    GoRoute(
+      path: '/cart',
+      builder: (context, state) => const CartPage(),
+    ),
+    GoRoute(
+      path: '/print-shack',
+      builder: (context, state) => const PrintShackPage(),
+    ),
+    GoRoute(
+      path: '/print-shack-about',
+      builder: (context, state) => const PrintShackAboutPage(),
+    ),
+    GoRoute(
+      path: '/search',
+      builder: (context, state) => const SearchPage(),
+    ),
+  ],
+);
 
 class UnionShopApp extends StatelessWidget {
   const UnionShopApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Union Shop',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
       ),
-      home: const HomeScreen(),
-      // By default, the app starts at the '/' route, which is the HomeScreen
-      initialRoute: '/',
-      // When navigating to '/product', build and return the ProductPage
-      // In your browser, try this link: http://localhost:49856/#/product
-      routes: {
-        '/product': (context) => const ProductPage(),
-        '/about': (context) => const AboutPage(),
-        '/sale': (context) => const SalePage(),
-        '/login': (context) => const LoginPage(),
-        '/collections': (context) => const CollectionsPage(),
-        '/collection-products': (context) => const CollectionProductsPage(),
-        '/cart': (context) => const CartPage(),
-        '/print-shack': (context) => const PrintShackPage(),
-        '/print-shack-about': (context) => const PrintShackAboutPage(),
-        '/search': (context) => const SearchPage(),
-        '/register': (context) => const RegisterPage(),
-      },
+      routerConfig: _router,
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final CarouselSliderController _carouselController = CarouselSliderController();
+
   void navigateToHome(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    context.go('/');
   }
 
   void navigateToProduct(BuildContext context) {
-    Navigator.pushNamed(context, '/product');
+    context.go('/product');
   }
 
   void navigateToAbout(BuildContext context) {
-    Navigator.pushNamed(context, '/about');
+    context.go('/about');
   }
 
   void navigateToCollections(BuildContext context) {
-    Navigator.pushNamed(context, '/collections');
+    context.go('/collections');
+  }
+
+  // Hero carousel widget
+  Widget _buildHeroCarousel(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    
+    final List<Map<String, String>> carouselItems = [
+      {
+        'image': 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600&q=80',
+        'title': 'Essential Range - Over 20% OFF!',
+        'description': 'Over 20% off our Essential Range. Come and grab yours while stock lasts!',
+      },
+      {
+        'image': 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80',
+        'title': 'New Summer Collection',
+        'description': 'Fresh styles for the season ahead. Discover the latest trends now!',
+      },
+      {
+        'image': 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=1600&q=80',
+        'title': 'Premium Quality',
+        'description': 'Handpicked items for the discerning shopper. Quality you can trust.',
+      },
+    ];
+
+    return Stack(
+      children: [
+        CarouselSlider(
+          carouselController: _carouselController,
+          options: CarouselOptions(
+            height: screenWidth > 800 ? 500 : 400,
+            viewportFraction: 1.0,
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 5),
+            autoPlayAnimationDuration: const Duration(milliseconds: 800),
+            autoPlayCurve: Curves.fastOutSlowIn,
+          ),
+          items: carouselItems.map((item) {
+            return Builder(
+              builder: (BuildContext context) {
+                return SizedBox(
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      // Background image
+                      Positioned.fill(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(item['image']!),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black.withValues(alpha: 0.7),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Content overlay
+                      Positioned(
+                        left: 24,
+                        right: 24,
+                        top: 0,
+                        bottom: 0,
+                        child: Center(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 800),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  item['title']!,
+                                  style: TextStyle(
+                                    fontSize: screenWidth > 600 ? 48 : 32,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    height: 1.2,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 24),
+                                Text(
+                                  item['description']!,
+                                  style: TextStyle(
+                                    fontSize: screenWidth > 600 ? 24 : 18,
+                                    color: Colors.white,
+                                    height: 1.5,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 40),
+                                ElevatedButton(
+                                  onPressed: () => navigateToCollections(context),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF4d2963),
+                                    foregroundColor: Colors.white,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: screenWidth > 600 ? 48 : 32,
+                                      vertical: screenWidth > 600 ? 24 : 16,
+                                    ),
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'BROWSE COLLECTION',
+                                    style: TextStyle(
+                                      fontSize: screenWidth > 600 ? 16 : 14,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }).toList(),
+        ),
+        // Previous button
+        Positioned(
+          left: 16,
+          top: 0,
+          bottom: 0,
+          child: Center(
+            child: IconButton(
+              onPressed: () => _carouselController.previousPage(),
+              icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 32),
+              style: IconButton.styleFrom(
+                backgroundColor: Colors.black.withOpacity(0.5),
+                padding: const EdgeInsets.all(16),
+              ),
+            ),
+          ),
+        ),
+        // Next button
+        Positioned(
+          right: 16,
+          top: 0,
+          bottom: 0,
+          child: Center(
+            child: IconButton(
+              onPressed: () => _carouselController.nextPage(),
+              icon: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 32),
+              style: IconButton.styleFrom(
+                backgroundColor: Colors.black.withOpacity(0.5),
+                padding: const EdgeInsets.all(16),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -93,93 +303,8 @@ class HomeScreen extends StatelessWidget {
             // Header
             const NavBar(),
 
-            // Hero Section
-            SizedBox(
-              height: screenWidth > 800 ? 500 : 400, // Taller hero on desktop
-              width: double.infinity,
-              child: Stack(
-                children: [
-                  // Background image
-                  Positioned.fill(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.7),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Content overlay
-                  Positioned(
-                    left: 24,
-                    right: 24,
-                    top: 0,
-                    bottom: 0,
-                    child: Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 800),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Essential Range - Over 20% OFF!',
-                              style: TextStyle(
-                                fontSize: screenWidth > 600 ? 48 : 32,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                height: 1.2,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 24),
-                            Text(
-                              "Over 20% off our Essential Range. Come and grab yours while stock lasts!",
-                              style: TextStyle(
-                                fontSize: screenWidth > 600 ? 24 : 18,
-                                color: Colors.white,
-                                height: 1.5,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 40),
-                            ElevatedButton(
-                              onPressed: () => navigateToCollections(context),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF4d2963),
-                                foregroundColor: Colors.white,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth > 600 ? 48 : 32,
-                                  vertical: screenWidth > 600 ? 24 : 16,
-                                ),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
-                              ),
-                              child: Text(
-                                'BROWSE COLLECTION',
-                                style: TextStyle(
-                                  fontSize: screenWidth > 600 ? 16 : 14,
-                                  letterSpacing: 1,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Hero Section with Carousel
+            _buildHeroCarousel(context),
 
             // Products Section
             Container(

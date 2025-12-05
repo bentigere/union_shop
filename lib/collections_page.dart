@@ -3,6 +3,7 @@ import 'package:union_shop/models/collection_model.dart';
 import 'package:union_shop/services/collection_service.dart';
 import 'package:union_shop/widgets/footer.dart';
 import 'package:union_shop/widgets/navbar.dart';
+import 'package:go_router/go_router.dart';
 
 class CollectionsPage extends StatefulWidget {
   const CollectionsPage({super.key});
@@ -80,7 +81,7 @@ class _CollectionsPageState extends State<CollectionsPage> {
   Widget _buildCollectionCard(BuildContext context, Collection collection) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/collection-products');
+        context.go('/collections/${collection.id}');
       },
       child: Container(
         decoration: BoxDecoration(
