@@ -54,7 +54,7 @@ class DesktopNavBar extends StatelessWidget {
         // Logo
         GestureDetector(
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+            context.go('/');
           },
           child: Image.asset(
             'assets/images/jordanlogo.png.jpg',
@@ -129,7 +129,7 @@ class MobileNavBar extends StatelessWidget {
         // Logo
         GestureDetector(
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+            context.go('/');
           },
           child: Image.asset(
             'assets/images/jordanlogo.png.jpg',

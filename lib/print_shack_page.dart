@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:union_shop/widgets/footer.dart';
 import 'package:union_shop/widgets/navbar.dart';
 
@@ -228,10 +229,11 @@ class _PrintShackPageState extends State<PrintShackPage> {
                       SnackBar(
                         content: Text(
                             'Added personalised $_selectedProduct to cart!'),
+                        duration: const Duration(seconds: 2),
                         action: SnackBarAction(
                           label: 'VIEW CART',
                           onPressed: () {
-                            Navigator.pushNamed(context, '/cart');
+                            context.go('/cart');
                           },
                         ),
                       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:union_shop/widgets/footer.dart';
 import 'package:union_shop/widgets/navbar.dart';
 
@@ -54,7 +55,7 @@ class PrintShackAboutPage extends StatelessWidget {
                     const SizedBox(height: 32),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/print-shack');
+                        context.go('/print-shack');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4d2963),

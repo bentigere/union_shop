@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -100,7 +101,7 @@ class _LoginFormState extends State<_LoginForm> {
                   Future.delayed(const Duration(seconds: 1), () {
                     if (mounted) {
                       // ignore: use_build_context_synchronously
-                      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                      context.go('/');
                     }
                   });
                 }
@@ -126,7 +127,7 @@ class _LoginFormState extends State<_LoginForm> {
                 const Text("Don't have an account?"),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/register');
+                    context.go('/register');
                   },
                   child: const Text('Register'),
                 ),

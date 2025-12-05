@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductCard extends StatelessWidget {
   final String title;
@@ -20,11 +21,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(
-          context, 
-          '/product', 
-          arguments: productId
-        );
+        context.go('/product', extra: productId);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

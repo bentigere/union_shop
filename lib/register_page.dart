@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -124,7 +125,7 @@ class _RegisterFormState extends State<_RegisterForm> {
                   Future.delayed(const Duration(seconds: 1), () {
                     if (mounted) {
                       // ignore: use_build_context_synchronously
-                      Navigator.pop(context); // Go back to login
+                      context.go('/login'); // Go back to login
                     }
                   });
                 }
