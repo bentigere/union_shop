@@ -148,7 +148,7 @@ class _ProductPageState extends State<ProductPage> {
                           child: ProductCard(
                             title: 'Classic T-Shirt',
                             price: '£12.00',
-                            imageUrl: 'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                            imageUrl: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80',
                           ),
                         ),
                         SizedBox(width: 16),
@@ -157,7 +157,7 @@ class _ProductPageState extends State<ProductPage> {
                           child: ProductCard(
                             title: 'Union Cap',
                             price: '£10.00',
-                            imageUrl: 'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                            imageUrl: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=800&q=80',
                           ),
                         ),
                         SizedBox(width: 16),
@@ -166,7 +166,7 @@ class _ProductPageState extends State<ProductPage> {
                           child: ProductCard(
                             title: 'Varsity Jacket',
                             price: '£45.00',
-                            imageUrl: 'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                            imageUrl: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&q=80',
                           ),
                         ),
                       ],
