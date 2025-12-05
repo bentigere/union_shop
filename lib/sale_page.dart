@@ -73,46 +73,48 @@ class SalePage extends StatelessWidget {
                     price: '£14.99',
                     originalPrice: '£24.99',
                     imageUrl:
-                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                    productId: '5',
+                        'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=800&h=1000&fit=crop',
+                    productId: '31',
                   ),
                   ProductCard(
                     title: 'Essential T-Shirt - White',
                     price: '£6.99',
                     originalPrice: '£12.99',
                     imageUrl:
-                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                    productId: '6',
+                        'https://images.unsplash.com/photo-1622445275463-afa2ab738c34?w=800&h=1000&fit=crop',
+                    productId: '32',
                   ),
                   ProductCard(
-                    title: 'University Mug',
-                    price: '£4.99',
-                    originalPrice: '£8.99',
-                    imageUrl:
-                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                    productId: '7',
-                  ),
-                  ProductCard(
-                    title: 'Notebook A4',
-                    price: '£2.50',
-                    originalPrice: '£5.00',
-                    imageUrl:
-                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                    productId: '8',
-                  ),
-                  ProductCard(
-                    title: 'Sports Water Bottle',
-                    price: '£5.99',
-                    originalPrice: '£10.99',
-                    imageUrl:
-                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                  ),
-                  ProductCard(
-                    title: 'Beanie Hat',
-                    price: '£8.00',
+                    title: 'University Cap',
+                    price: '£8.99',
                     originalPrice: '£15.00',
                     imageUrl:
-                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                        'https://images.unsplash.com/photo-1589487391730-58f20eb2c308?w=800&h=1000&fit=crop',
+                    productId: '33',
+                  ),
+                  ProductCard(
+                    title: 'A5 Notebook',
+                    price: '£3.50',
+                    originalPrice: '£4.99',
+                    imageUrl:
+                        'https://images.unsplash.com/photo-1517842645767-c639042777db?w=800&h=1000&fit=crop',
+                    productId: '4',
+                  ),
+                  ProductCard(
+                    title: 'Metal Water Bottle',
+                    price: '£9.99',
+                    originalPrice: '£12.50',
+                    imageUrl:
+                        'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&h=1000&fit=crop',
+                    productId: '5',
+                  ),
+                  ProductCard(
+                    title: 'Canvas Tote Bag',
+                    price: '£6.99',
+                    originalPrice: '£8.99',
+                    imageUrl:
+                        'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&h=1000&fit=crop',
+                    productId: '8',
                   ),
                 ],
               ),

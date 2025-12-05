@@ -30,8 +30,11 @@ final GoRouter _router = GoRouter(
       builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(
-      path: '/product',
-      builder: (context, state) => const ProductPage(),
+      path: '/product/:productId',
+      builder: (context, state) {
+        final productId = state.pathParameters['productId'];
+        return ProductPage(productId: productId);
+      },
     ),
     GoRoute(
       path: '/about',

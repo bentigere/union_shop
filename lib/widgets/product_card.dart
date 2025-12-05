@@ -21,7 +21,11 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go('/product', extra: productId);
+        if (productId != null) {
+          context.go('/product/$productId');
+        } else {
+          context.go('/product/1'); // Fallback to first product
+        }
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

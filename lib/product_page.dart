@@ -8,7 +8,9 @@ import 'package:union_shop/widgets/footer.dart';
 import 'package:union_shop/widgets/product_card.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({super.key});
+  final String? productId;
+  
+  const ProductPage({super.key, this.productId});
 
   @override
   State<ProductPage> createState() => _ProductPageState();
@@ -24,27 +26,37 @@ class _ProductPageState extends State<ProductPage> {
   int quantity = 1;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     _loadProduct();
   }
 
+  @override
+  void didUpdateWidget(ProductPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.productId != widget.productId) {
+      _loadProduct();
+    }
+  }
+
   void _loadProduct() {
-    final args = ModalRoute.of(context)?.settings.arguments;
-    if (args is String) {
+    if (widget.productId != null) {
+      final product = _productService.getProductById(widget.productId!);
       setState(() {
-        _product = _productService.getProductById(args);
+        _product = product;
         _isLoading = false;
+        quantity = 1; // Reset quantity when loading new product
         _initializeSelections();
       });
     } else {
-      // Fallback for testing or direct navigation
+      // Fallback - show first product
+      final products = _productService.getProducts();
       setState(() {
-        final products = _productService.getProducts();
         if (products.isNotEmpty) {
           _product = products.first;
         }
         _isLoading = false;
+        quantity = 1;
         _initializeSelections();
       });
     }
@@ -52,8 +64,8 @@ class _ProductPageState extends State<ProductPage> {
 
   void _initializeSelections() {
     if (_product != null) {
-      if (_product!.sizes.isNotEmpty) selectedSize = _product!.sizes.first;
-      if (_product!.colors.isNotEmpty) selectedColor = _product!.colors.first;
+      selectedSize = _product!.sizes.isNotEmpty ? _product!.sizes.first : null;
+      selectedColor = _product!.colors.isNotEmpty ? _product!.colors.first : null;
     }
   }
 
@@ -71,6 +83,7 @@ class _ProductPageState extends State<ProductPage> {
     }
 
     return Scaffold(
+      key: ValueKey(_product!.id), // Force rebuild when product changes
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,31 +155,54 @@ class _ProductPageState extends State<ProductPage> {
                     height: 300,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
-                      children: const [
+                      children: [
                         SizedBox(
                           width: 200,
                           child: ProductCard(
                             title: 'Classic T-Shirt',
-                            price: '£12.00',
+                            price: '£14.99',
                             imageUrl: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80',
+                            productId: '2',
                           ),
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         SizedBox(
                           width: 200,
                           child: ProductCard(
                             title: 'Union Cap',
-                            price: '£10.00',
+                            price: '£15.00',
                             imageUrl: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=800&q=80',
+                            productId: '7',
                           ),
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         SizedBox(
                           width: 200,
                           child: ProductCard(
                             title: 'Varsity Jacket',
                             price: '£45.00',
                             imageUrl: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&q=80',
+                            productId: '3',
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        SizedBox(
+                          width: 200,
+                          child: ProductCard(
+                            title: 'A5 Notebook',
+                            price: '£4.99',
+                            imageUrl: 'https://images.unsplash.com/photo-1517842645767-c639042777db?w=800&q=80',
+                            productId: '4',
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        SizedBox(
+                          width: 200,
+                          child: ProductCard(
+                            title: 'Metal Water Bottle',
+                            price: '£12.50',
+                            imageUrl: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80',
+                            productId: '5',
                           ),
                         ),
                       ],
